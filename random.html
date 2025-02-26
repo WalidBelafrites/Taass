@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina Random</title>
+    <title>GTT Public API Fetch</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 26px;
+            margin: 50px;
         }
         .container {
             max-width: 600px;
@@ -31,20 +31,32 @@
         button:hover {
             background-color: #0056b3;
         }
+        pre {
+            text-align: left;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Benvenuto sulla Pagina Random</h1>
-        <p>Clicca il bottone per generare un numero casuale!</p>
-        <button onclick="generaNumero()">Genera Numero</button>
-        <p id="numero"></p>
+        <h1>Fetch da API Pubblica</h1>
+        <p>Clicca il bottone per recuperare dati da un'API pubblica!</p>
+        <button onclick="fetchPublicAPI()">Recupera Dati</button>
+        <pre id="output"></pre>
     </div>
 
     <script>
-        function generaNumero() {
-            var numeroCasuale = Math.floor(Math.random() * 100) + 1;
-            document.getElementById("numero").innerText = "Numero generato: " + numeroCasuale;
+        async function fetchPublicAPI() {
+            try {
+                const response = await fetch('http://gpa.madbob.org/query.php?stop=137');
+                const data = await response.json();
+                document.getElementById("output").innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById("output").innerText = "Errore nel recupero dei dati: " + error;
+            }
         }
     </script>
 </body>
